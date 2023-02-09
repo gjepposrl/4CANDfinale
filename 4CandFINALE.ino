@@ -76,23 +76,23 @@ void setup() {
 
 void loop() {
 
-    int statopuls = digitalRead(puls);
-    if ((statopuls == HIGH) || (check == true)) {
+    int statopuls = digitalRead(puls);  // lettura switch per selezione modalità
+    if ((statopuls == HIGH) || (check == true)) { // controllo stato dello switch per selezione modalità e controllo prima esecuzione
 
-    int val_rpm = analogRead(pin_rpm);
-    int val_spark = analogRead(pin_spark);
+    int val_rpm = analogRead(pin_rpm);  // lettura potenziometro per impostazione rpm
+    int val_spark = analogRead(pin_spark);  // lettura potenziometro per impostazione del tempo di accensione candela
 
-    unsigned long int rpm = ((9000 / 1023.0) * val_rpm) + 1000;  //conversione in rpm
+    unsigned long int rpm = ((9000 / 1023.0) * val_rpm) + 1000;  // conversione in rpm
 
-    float spark = ((5000.0 / 1023.0) * val_spark) + 1000;  //calcolo dwell time
+    float spark = ((5000.0 / 1023.0) * val_spark) + 1000;  // calcolo dwell time
 
     float T = ((60000.0 / ((float) rpm)) * 1000.0) * 2.0; // calcolo periodo
 
-    float phaseD = T / 4;
+    float phaseD = T / 4; //calcolo sfasamento
  
-    T2 = T;
-    spark2 = spark;
-    phaseD2 = phaseD;
+    T2 = T; // conversione periodo in intero
+    spark2 = spark; // conversione tempo di accensione in intero
+    phaseD2 = phaseD; // conversione sfasamento in intero
     Serial.println(T);
     Serial.println(phaseD);
 
@@ -107,23 +107,23 @@ void loop() {
         lcd.setCursor(7, 1);
         lcd.print(spark2);
     */
-     check = false;
+     check = false; // nullificazione flag prima esecuzione
      
-     cand1start = micros();
-     cand2start = cand1start + phaseD2;
-     cand3start = cand2start + phaseD2;
-     cand4start = cand3start + phaseD2;
+     cand1start = micros(); // tempo di partenza prima accensione della prima candela
+     cand2start = cand1start + phaseD2; // calcolo tempo di partenza prima accensione della seconda candela
+     cand3start = cand2start + phaseD2; // calcolo tempo di partenza prima accensione della terza candela
+     cand4start = cand3start + phaseD2; // calcolo tempo di partenza prima accensione della quarta candela
  }
  
   else{
-    cand1EndPulse = cand1start + spark2;
-    cand1End = cand1start + T2;
-    cand2EndPulse = cand2start + spark2;
-    cand2End = cand2start + T2;
-    cand3EndPulse = cand3start + spark2;
-    cand3End = cand3start + T2;
-    cand4EndPulse = cand4start + spark2;
-    cand4End = cand4start + T2;
+    cand1EndPulse = cand1start + spark2;  // calcolo tempo di spegnimento nel periodo corrente della prima candela
+    cand1End = cand1start + T2; // calcolo fine del periodo corrente della prima candela
+    cand2EndPulse = cand2start + spark2;  // calcolo tempo di spegnimento nel periodo corrente della seconda candela
+    cand2End = cand2start + T2; // calcolo fine del periodo corrente della seconda candela
+    cand3EndPulse = cand3start + spark2;  // calcolo tempo di spegnimento nel periodo corrente della terza candela
+    cand3End = cand3start + T2; // calcolo fine del periodo corrente della terza candela
+    cand4EndPulse = cand4start + spark2;  // calcolo tempo di spegnimento nel periodo corrente della quarta candela
+    cand4End = cand4start + T2; // calcolo fine del periodo corrente della quarta candela
 
  t = micros();
 /* Serial.println("t");
