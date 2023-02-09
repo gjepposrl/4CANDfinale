@@ -4,6 +4,8 @@
 
 hd44780_I2Cexp lcd;
 
+//inizio dichiarazione pin utilizzati
+
 int pin_rpm = A0;
 int pin_spark = A1;
 
@@ -12,6 +14,10 @@ int candela2 = 3;
 int candela3 = 4;
 int candela4 = 5;
 int puls=6;
+
+//fine dichiarazione pin utilizzati
+
+//inizio dichiarazione variabili utilizzate
 
 unsigned long phaseD2;
 unsigned long spark2;
@@ -42,6 +48,8 @@ unsigned long cand4End;
 
 
 boolean check = true;
+
+//fine dichiarazione variabili utilizzate
 
 void setup() {
   Serial.begin(9600);
