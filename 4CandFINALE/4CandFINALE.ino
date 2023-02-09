@@ -1,13 +1,13 @@
 #include <Wire.h>
 #include <hd44780.h>                       // main hd44780 header
-#include <hd44780ioClass/hd44780_I2Cexp.h> // i2c expander i/o class header
+#include <hd44780ioClass/hd44780_I2Cexp.h> // i2c expander i/o class header libreria con esecuzione seriale più rapida
 
 hd44780_I2Cexp lcd;
 
 //inizio dichiarazione pin utilizzati
 
-int pin_rpm = A0;
-int pin_spark = A1;
+int pin_rpm = A0;   //poteziometro regolazione rpm
+int pin_spark = A1; //poteziometro regolazione dwell time
 
 int candela1 = 2;
 int candela2 = 3;
@@ -15,7 +15,7 @@ int candela3 = 4;
 int candela4 = 5;
 int puls=6;
 
-//fine dichiarazione pin utilizzati
+
 
 //inizio dichiarazione variabili utilizzate
 
@@ -47,13 +47,13 @@ unsigned long cand4EndPulse;
 unsigned long cand4End;
 
 
-boolean check = true;
+boolean check = true;      //creazione flag per prima esecuzione
 
 //fine dichiarazione variabili utilizzate
 
 void setup() {
   Serial.begin(9600);
-  pinMode(candela1, OUTPUT);
+  pinMode(candela1, OUTPUT);            
   pinMode(candela2, OUTPUT);
   pinMode(candela3, OUTPUT);
   pinMode(candela4, OUTPUT);
@@ -144,7 +144,7 @@ Serial.println(T2);
 Serial.println(spark2);*/
  
 // candela 1
-    if ((t >= cand1start) && (t <= cand1EndPulse)) {
+    if ((t >= cand1start) && (t <= cand1EndPulse)) {    
       cand1Stato = HIGH;
     }
     else if (t <= cand1End) {
